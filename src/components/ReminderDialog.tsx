@@ -78,6 +78,7 @@ export default function ReminderDialog({
                 hour12: false,
                 hour: "2-digit",
                 minute: "2-digit",
+                timeZone: "Asia/Dhaka"
               })}
               className="w-full border rounded p-2"
             />
