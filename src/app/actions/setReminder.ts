@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma.server";
 import { Resend } from "resend";
+import { subHours } from "date-fns";
 
 export async function setReminder(taskId: string, formData: FormData) {
   const { userId } = auth();
@@ -20,7 +21,8 @@ export async function setReminder(taskId: string, formData: FormData) {
   const date = formData.get("date") as string;
   const time = formData.get("time") as string;
 
-  const reminderTime = new Date(`${date}T${time}:00`);
+  let reminderTime = new Date(`${date}T${time}:00`);
+  reminderTime = subHours(reminderTime, 6);
 
   try {
     const task = await prisma.task.findUnique({

@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import type { TaskWithReminders } from "@/types/task";
 import { setReminder } from "@/app/actions/setReminder";
-import { format,subHours } from "date-fns";
+import { format } from "date-fns";
 
 interface ReminderDialogProps {
   task: TaskWithReminders;
@@ -35,10 +35,7 @@ export default function ReminderDialog({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     console.log("Props Date", date);
-    const adjustedDate = subHours(date, 6);
-  
-    // Set the adjusted date in the form data
-    formData.set("date", format(adjustedDate, "yyyy-MM-dd"));
+    formData.set("date", format(date, "yyyy-MM-dd"));
 
     startTransition(async () => {
       const result = await setReminder(task.id, formData);
